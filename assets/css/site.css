@@ -42,6 +42,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-size: 17px;
   line-height: 1.65;
@@ -231,8 +232,8 @@ a:hover {
   grid-template-columns: 1.4fr 1fr;
   gap: 56px;
   align-items: center;
-  padding-top: 84px;
-  padding-bottom: 84px;
+  padding-top: 72px;
+  padding-bottom: 32px;
 }
 
 .hero__eyebrow {
@@ -632,6 +633,23 @@ a:hover {
 
   .nav__toggle {
     display: flex;
+  }
+
+  /* Stack heading + meta and let long lines wrap (avoids horizontal overflow) */
+  .timeline__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .timeline__meta {
+    white-space: normal;
+  }
+
+  .timeline__head h3,
+  .timeline__meta {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .nav__links {
