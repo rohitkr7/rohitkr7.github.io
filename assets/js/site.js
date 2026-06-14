@@ -5,29 +5,25 @@
   var root = document.documentElement;
   var STORAGE_KEY = "theme";
 
-  /* ---- Theme ---- */
-  function applyTheme(theme) {
-    root.setAttribute("data-theme", theme);
-  }
-
-  // Dark by default; a previously saved toggle choice wins.
-  var saved = null;
-  try {
-    saved = localStorage.getItem(STORAGE_KEY);
-  } catch (e) {}
-
-  if (saved === "light" || saved === "dark") {
-    applyTheme(saved);
-  }
-
+  /* ---- Theme toggle (initial theme is set pre-paint by an inline <head> script) ---- */
   var toggle = document.getElementById("themeToggle");
+  function syncToggle() {
+    if (toggle) {
+      toggle.setAttribute(
+        "aria-pressed",
+        root.getAttribute("data-theme") === "light" ? "true" : "false"
+      );
+    }
+  }
+  syncToggle();
   if (toggle) {
     toggle.addEventListener("click", function () {
       var next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-      applyTheme(next);
+      root.setAttribute("data-theme", next);
       try {
         localStorage.setItem(STORAGE_KEY, next);
       } catch (e) {}
+      syncToggle();
     });
   }
 
@@ -39,6 +35,55 @@
   }
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
+
+  /* ---- Mobile nav menu ---- */
+  var navToggle = document.getElementById("navToggle");
+  var navLinks = document.getElementById("navLinks");
+  if (navToggle && navLinks) {
+    function setMenu(open) {
+      navLinks.classList.toggle("is-open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    navToggle.addEventListener("click", function () {
+      setMenu(!navLinks.classList.contains("is-open"));
+    });
+    navLinks.addEventListener("click", function (e) {
+      if (e.target.tagName === "A") setMenu(false);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setMenu(false);
+    });
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 760) setMenu(false);
+    });
+  }
+
+  /* ---- Scroll-spy: highlight the section currently in view ---- */
+  if (navLinks && "IntersectionObserver" in window) {
+    var navAnchors = navLinks.querySelectorAll("a[href^='#']");
+    var sectionMap = {};
+    navAnchors.forEach(function (a) {
+      var sec = document.getElementById(a.getAttribute("href").slice(1));
+      if (sec) sectionMap[sec.id] = a;
+    });
+    var spy = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          navAnchors.forEach(function (a) {
+            a.classList.remove("is-active");
+          });
+          if (sectionMap[entry.target.id]) {
+            sectionMap[entry.target.id].classList.add("is-active");
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+    Object.keys(sectionMap).forEach(function (id) {
+      spy.observe(document.getElementById(id));
+    });
+  }
 
   /* ---- Scroll reveal ---- */
   var reveals = document.querySelectorAll(".reveal");

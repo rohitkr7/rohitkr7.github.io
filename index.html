@@ -7,15 +7,40 @@
   <title>Rohit Roy — Senior Software Engineer</title>
   <meta name="description"
     content="Rohit Roy — Senior Software Engineer at ServiceNow. Building features and AI-driven capabilities on the ServiceNow platform. Interested in AI agent design, distributed systems, and developer tooling." />
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#fbfcfe" media="(prefers-color-scheme: light)" />
+  <link rel="canonical" href="https://rohitkr7.github.io/" />
   <link rel="icon" href="images/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+
+  <!-- Set theme before first paint (no flicker) and flag JS availability -->
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") d.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
 
   <!-- Open Graph -->
   <meta property="og:title" content="Rohit Roy — Senior Software Engineer" />
   <meta property="og:description"
     content="Senior Software Engineer at ServiceNow building features and AI-driven capabilities. Interested in AI agents, distributed systems, and developer tooling." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://rohitkr7.github.io" />
-  <meta property="og:image" content="https://rohitkr7.github.io/images/profile-cutout.png" />
+  <meta property="og:url" content="https://rohitkr7.github.io/" />
+  <meta property="og:image" content="https://rohitkr7.github.io/images/og-card.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rohit Roy — Senior Software Engineer" />
+  <meta name="twitter:description"
+    content="Senior Software Engineer at ServiceNow building features and AI-driven capabilities." />
+  <meta name="twitter:image" content="https://rohitkr7.github.io/images/og-card.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,6 +48,23 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/site.css" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rohit Roy",
+      "jobTitle": "Senior Software Engineer",
+      "worksFor": { "@type": "Organization", "name": "ServiceNow" },
+      "address": { "@type": "PostalAddress", "addressLocality": "Hyderabad", "addressCountry": "IN" },
+      "alumniOf": { "@type": "CollegeOrUniversity", "name": "Heritage Institute of Technology, Kolkata" },
+      "url": "https://rohitkr7.github.io/",
+      "sameAs": [
+        "https://linkedin.com/in/rohitkr7",
+        "https://github.com/rohitkr7"
+      ]
+    }
+  </script>
 </head>
 
 <body>
@@ -32,14 +74,21 @@
   <header class="nav" id="nav">
     <div class="container nav__inner">
       <a class="nav__brand" href="#top">Rohit&nbsp;Roy</a>
-      <nav class="nav__links" aria-label="Primary">
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
         <a href="#contact">Contact</a>
       </nav>
+      <button class="nav__toggle" id="navToggle" type="button" aria-label="Toggle navigation menu"
+        aria-controls="navLinks" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme"
-        title="Toggle theme">
+        aria-pressed="false" title="Toggle theme">
         <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="4"></circle>
@@ -104,7 +153,8 @@
       </div>
       <div class="hero__media reveal">
         <div class="hero__photo">
-          <img src="images/profile-cutout.png" alt="Portrait of Rohit Roy" loading="eager" />
+          <img src="images/profile-cutout.png" alt="Portrait of Rohit Roy" width="440" height="567"
+            loading="eager" />
         </div>
       </div>
     </section>
@@ -240,9 +290,23 @@
       </div>
     </section>
 
+    <!-- Education -->
+    <section class="section container" id="education">
+      <h2 class="section__title"><span class="section__no">04</span> Education</h2>
+      <div class="timeline">
+        <div class="timeline__item reveal">
+          <div class="timeline__head">
+            <h3>B.Tech, Electronics &amp; Communication</h3>
+            <span class="timeline__meta">Heritage Institute of Technology, Kolkata · 2013 – 2017</span>
+          </div>
+          <p class="edu__detail">DGPA 8.74 / 10</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Contact -->
     <section class="section container section--contact" id="contact">
-      <h2 class="section__title"><span class="section__no">04</span> Contact</h2>
+      <h2 class="section__title"><span class="section__no">05</span> Contact</h2>
       <div class="contact reveal">
         <p class="contact__lead">
           Always happy to talk about AI agents, distributed systems, the ServiceNow platform, or just trade notes.
@@ -259,7 +323,7 @@
   <footer class="footer">
     <div class="container footer__inner">
       <span>© <span id="year"></span> Rohit Roy</span>
-      <span class="muted">Built with plain HTML &amp; CSS.</span>
+      <span class="muted">Built with plain HTML, CSS &amp; a little JS.</span>
     </div>
   </footer>
 
