@@ -392,6 +392,16 @@ a:hover {
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 4px var(--accent-soft);
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s ease;
+}
+
+/* Dot grows + glows while its entry sits in the viewport's focus band */
+.timeline__item.is-focused::before {
+  transform: scale(1.7);
+  box-shadow: 0 0 0 5px var(--accent-soft),
+    0 0 16px 3px color-mix(in srgb, var(--accent) 75%, transparent);
 }
 
 .timeline__head {
@@ -531,6 +541,12 @@ a:hover {
   .social a:hover,
   .chips li:hover,
   .theme-toggle:hover {
+    transform: none;
+  }
+
+  .timeline__item::before,
+  .timeline__item.is-focused::before {
+    transition: none;
     transform: none;
   }
 }

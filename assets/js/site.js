@@ -63,6 +63,23 @@
     });
   }
 
+  /* ---- Timeline dots: glow while the entry is in the viewport's focus band ---- */
+  var timelineItems = document.querySelectorAll(".timeline__item");
+  if ("IntersectionObserver" in window && timelineItems.length) {
+    var focusObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle("is-focused", entry.isIntersecting);
+        });
+      },
+      // Thin band across the vertical middle of the viewport.
+      { rootMargin: "-42% 0px -42% 0px", threshold: 0 }
+    );
+    timelineItems.forEach(function (el) {
+      focusObserver.observe(el);
+    });
+  }
+
   /* ---- Email (assembled at runtime so the address isn't in page source) ---- */
   var emailLinks = document.querySelectorAll(".js-email");
   emailLinks.forEach(function (el) {
